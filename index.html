@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE風メッセージングアプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chatbox {
+            width: 400px;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        #message {
+            width: 300px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        #sendBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>LINE風メッセージングアプリ</h1>
+
+    <div id="chatbox"></div>
+
+    <input type="text" id="message" placeholder="メッセージを入力してください">
+    <button id="sendBtn" onclick="sendMessage()">送信</button>
+
+    <script>
+        const chatbox = document.getElementById('chatbox');
+        const messageInput = document.getElementById('message');
+
+        // サーバーの代わりにダミーデータを使用
+        const messages = [
+            { sender: 'Alice', text: 'こんにちは！' },
+            { sender: 'You', text: 'こんにちは！' },
+            { sender: 'Bob', text: '今日の天気はどうですか？' },
+            { sender: 'You', text: '晴れています！' },
+            { sender: 'Charlie', text: '今晩一緒に夕食を食べませんか？' },
+            { sender: 'You', text: 'いいですね！' }
+        ];
+
+        // 初期メッセージの表示
+        messages.forEach(message => {
+            appendMessage(message.sender, message.text);
+        });
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message === '') return;
+
+            appendMessage('You', message); // 自分のメッセージを表示
+
+            // ここで実際にはサーバーにメッセージを送信する処理を追加することができます
+
+            messageInput.value = ''; // 入力欄をクリア
+            messageInput.focus(); // 入力欄にフォーカスを戻す
+        }
+
+        function appendMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatbox.appendChild(messageElement);
+
+            // メッセージを最下部にスクロール
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
